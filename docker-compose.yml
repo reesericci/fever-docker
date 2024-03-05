@@ -4,10 +4,16 @@ services:
         mysql:
                 image: mysql
                 environment:
-                        - MYSQL_ROOT_PASSWORD=password
+                        - MYSQL_DATABASE=fever
+                        - MYSQL_USER=fever
+                        - MYSQL_PASSWORD=feedafever
+                        - MYSQL_ROOT_PASSWORD=feedafever
+                network_mode: "host"
+                volumes:
+                  - ./db:/var/lib/mysql
         fever:
                 build: .
-                links:
-                        - mysql
-                ports:
-                        - 8080:80
+                network_mode: "host"
+                volumes:
+                  - ./fever:/var/www/html/
+                  - ./config:/var/www/html/firewall/config
